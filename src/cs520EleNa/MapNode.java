@@ -26,12 +26,18 @@ public class MapNode {
 		}
 		return false;
 	}
-	//getters for x, y, and the elevation. Do we need setters?
+	//getters for x, y, size, nodes, and the elevation. Do we need setters?
 	public int getX() {
 		return x;
 	}
 	public int getY() {
 		return y;
+	}
+	public int getSize() {
+		return nodes.length;
+	}
+	public MapNode[] getNodes() {
+		return nodes;
 	}
 	public int getElevation() {
 		return elevation;
@@ -44,6 +50,7 @@ public class MapNode {
 			nodes[i] = temp[i];
 		}
 		nodes[nodes.length-1] = node; 
+		sortNodesByDistance();
 	}
 	//returns true if it can find the node specified by x, y, and elevation inside the node array. Returns false if it cannot find the node inside the node array.
 	public boolean hasNode(int x, int y, int elevation) {
@@ -63,8 +70,25 @@ public class MapNode {
 		}
 		throw new NodeNotFoundException("Node was not found.");
 	}
-	//TODO: Remove node (do we need this?)
-	//public boolean removeNode() {
-	//}
+	//implements a bubble sort to sort the nodes using getDistance
+	public void sortNodesByDistance() {
+		int n = nodes.length;
+		boolean swapped = true;
+		while(swapped) {
+			swapped = false;
+			for(int i = 1; i < n; i++) {
+				if(getDistance(nodes[i-1]) > getDistance(nodes[i])) {
+					MapNode temp = nodes[i-1];
+					nodes[i-1] = nodes[i];
+					nodes[i] = temp;
+					swapped = true;
+				}
+			}
+		}
+	}
+	//does pythagorean theorem for distance to a node
+	public double getDistance(MapNode node) {
+		return Math.sqrt(Math.abs((this.x-node.getX())*(this.x-node.getX()))+Math.abs((this.y-node.getY())*(this.y-node.getY())));
+	}
 	
 }
