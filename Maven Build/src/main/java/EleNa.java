@@ -4,13 +4,14 @@ import com.google.maps.model.LatLng;
 public class EleNa {
 
     public static void main(String[] args) {
-        GMAP test = new GMAP();
-        JsonObject location = test.getJson();
+        GMAP gmap = new GMAP();
+        JsonObject location = gmap.getJson();
         while (location == null) {
-            location = test.getJson();
+            location = gmap.getJson();
         }
-        LatLng coords = test.getCoords(location);
-        Tuple elevation = test.elevData(coords);
-        System.out.println(elevation.y);
+        LatLng coords = gmap.getCoords(location);
+        double elevation = gmap.elevData(coords);
+
+        System.out.println(elevation);
     }
 }

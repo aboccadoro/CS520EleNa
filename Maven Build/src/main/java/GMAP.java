@@ -54,24 +54,12 @@ class GMAP {
                 jr.close();
             }
         }
-        catch (MalformedURLException e) {
-            return null;
-        }
-        catch (IOException e) {
-            return null;
-        }
-        catch (OverQueryLimitException e) {
-            System.exit(1);
-        }
-        catch (InvalidRequestException e) {
-            return null;
-        }
-        catch (RequestDeniedException e) {
-            return null;
-        }
-        catch (TimeoutException e) {
-            System.exit(1);
-        }
+        catch (MalformedURLException e) {System.out.println("Malformed URL"); return null;}
+        catch (IOException e) {System.out.println("Keyboard input error"); return null;}
+        catch (OverQueryLimitException e) {System.out.println("Query limit exceeded on Geocoding API"); System.exit(1);}
+        catch (InvalidRequestException e) {System.out.println("Invalid request"); return null;}
+        catch (RequestDeniedException e) {System.out.println("Request denied"); return null;}
+        catch (TimeoutException e) {System.exit(1);}
         return json;
     }
 
@@ -80,7 +68,7 @@ class GMAP {
         return new LatLng(json.get("lat").getAsDouble(), json.get("lng").getAsDouble());
     }
 
-    Tuple elevData(LatLng coords) {
+    double elevData(LatLng coords) {
         JsonObject json = null;
         int tries = 0;
         try {
@@ -102,13 +90,12 @@ class GMAP {
                 jr.close();
             }
         }
-        catch (MalformedURLException e) {return null;}
-        catch (IOException e) {return null;}
-        catch (OverQueryLimitException e) {System.exit(1);}
-        catch (InvalidRequestException e) {return null;}
-        catch (RequestDeniedException e) {return null;}
-        catch (TimeoutException e) {return null;}
-        if (json != null) return new Tuple(true, json.get("results").getAsJsonArray().get(0).getAsJsonObject().get("elevation").getAsDouble());
-        return new Tuple(false, 0.0);
+        catch (MalformedURLException e) {System.out.println("Malformed URL"); System.exit(1);}
+        catch (IOException e) {System.out.println("Keyboard input error"); System.exit(1);}
+        catch (OverQueryLimitException e) {System.out.println("Query limit exceeded on Elevation Services API"); System.exit(1);}
+        catch (InvalidRequestException e) {System.out.println("Invalid request"); System.exit(1);}
+        catch (RequestDeniedException e) {System.out.println("Request denied"); System.exit(1);}
+        catch (TimeoutException e) {System.out.println("Timeout exceeded"); System.exit(1);}
+        return json.get("results").getAsJsonArray().get(0).getAsJsonObject().get("elevation").getAsDouble();
     }
 }
