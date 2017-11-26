@@ -17,7 +17,7 @@ class GMAP {
 
     GMAP() {}
 
-    JsonObject geolocate(Scanner location) {
+    JsonObject geocode(Scanner location) {
         //Derive URL from geocoded keyboard input using addressing syntax URL(URL(static), output?address + &key="key")
         JsonObject json = null;
         try {
