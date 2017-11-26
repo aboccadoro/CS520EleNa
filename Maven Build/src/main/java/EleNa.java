@@ -26,5 +26,12 @@ public class EleNa {
         System.out.println(gmap.getCoords(dst));
         System.out.println(dstel);
         System.out.println("\nElevation change: " + Math.abs(dstel - srcel));
+        
+        //route code
+        GoogleRoute route = new GoogleRoute();
+        JsonObject json = route.query();
+        System.out.println(route.getDistanceText(json));
+        System.out.println(route.getDistance(json) + " meters");
+        
     }
 }

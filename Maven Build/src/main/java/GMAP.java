@@ -76,7 +76,7 @@ class GMAP {
         catch (IllegalStateException e) {return new Tuple<Boolean, JsonObject>(false, null);}
         return new Tuple<Boolean, JsonObject>(true, json);
     }
-
+    
     double elevData(LatLng coords) {
         JsonObject json = null;
         int tries = 0;
