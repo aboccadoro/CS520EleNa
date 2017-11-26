@@ -1,9 +1,7 @@
 import com.google.gson.stream.JsonReader;
 import com.google.maps.*;
 import com.google.gson.*;
-import com.google.maps.errors.InvalidRequestException;
-import com.google.maps.errors.OverQueryLimitException;
-import com.google.maps.errors.RequestDeniedException;
+import com.google.maps.errors.*;
 import com.google.maps.model.LatLng;
 
 import java.net.*;
@@ -19,16 +17,15 @@ class GMAP {
 
     GMAP() {}
 
-    JsonObject getJson() {
+    JsonObject geolocate(Scanner location) {
         //Derive URL from geocoded keyboard input using addressing syntax URL(URL(static), output?address + &key="key")
         JsonObject json = null;
         try {
             URL stat = new URL("https://maps.googleapis.com/maps/api/geocode/");
             int tries = 0;
             while(true) {
-                //Enter location to geoencode
-                Scanner input = new Scanner(System.in);
-                String in = input.nextLine();
+                //Location to geoencode
+                String in = location.nextLine();
                 char[] format = in.toCharArray();
                 int index = 0;
                 CharacterIterator it = new StringCharacterIterator(in);
@@ -45,9 +42,9 @@ class GMAP {
                 json = parser.parse(jr).getAsJsonObject();
 
                 if(json.get("status").getAsString().equals("OK")) break;
-                else if(json.get("status").getAsString().equals("OVER_QUERY_LIMIT")) throw new OverQueryLimitException("Query limit exceeded during geocoding of location: " + input.toString());
-                else if(json.get("status").getAsString().equals("INVALID_REQUEST")) throw new InvalidRequestException("Check the address, components and/or latlng fields of: " + input.toString());
-                else if(json.get("status").getAsString().equals("REQUEST_DENIED")) throw new RequestDeniedException("The request was denied for the location: " + input.toString());
+                else if(json.get("status").getAsString().equals("OVER_QUERY_LIMIT")) throw new OverQueryLimitException("Query limit exceeded during geocoding of location: " + in);
+                else if(json.get("status").getAsString().equals("INVALID_REQUEST")) throw new InvalidRequestException("Check the address, components and/or latlng fields of: " + in);
+                else if(json.get("status").getAsString().equals("REQUEST_DENIED")) throw new RequestDeniedException("The request was denied for the location: " + in);
                 else if(tries > 5) throw new TimeoutException("The request failed 5 times in a row, please try again later.");
                 tries++;
                 br.close();
@@ -64,8 +61,20 @@ class GMAP {
     }
 
     LatLng getCoords(JsonObject geolocation) {
+        Tuple<Boolean, JsonObject> iscoords = isCoords(geolocation);
+        if (iscoords.x) return new LatLng(iscoords.y.get("lat").getAsDouble(), iscoords.y.get("lng").getAsDouble());
         JsonObject json = geolocation.get("results").getAsJsonArray().get(0).getAsJsonObject().get("geometry").getAsJsonObject().get("location").getAsJsonObject();
         return new LatLng(json.get("lat").getAsDouble(), json.get("lng").getAsDouble());
+    }
+
+    Tuple<Boolean, JsonObject> isCoords(JsonObject geolocation) {
+        JsonObject json;
+        try {
+            json = geolocation.get("results").getAsJsonArray().get(0).getAsJsonObject().get("formatted_address").getAsJsonObject();
+        }
+        catch (ClassCastException e) {return new Tuple<Boolean, JsonObject>(false, null);}
+        catch (IllegalStateException e) {return new Tuple<Boolean, JsonObject>(false, null);}
+        return new Tuple<Boolean, JsonObject>(true, json);
     }
 
     double elevData(LatLng coords) {
