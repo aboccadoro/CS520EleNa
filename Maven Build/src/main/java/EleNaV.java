@@ -183,7 +183,7 @@ public class EleNaV {
         int zoom = 13;
         EleNaV frame = new EleNaV();
         frame.renderMap(center, zoom, path);
-        frame.renderElevation(path, 100);
+        frame.renderElevation(path, 23);
         // show the GUI window
     }
 }
