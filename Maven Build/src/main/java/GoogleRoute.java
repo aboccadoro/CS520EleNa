@@ -2,7 +2,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.maps.*;
 import com.google.gson.*;
 import com.google.maps.errors.*;
-import com.google.maps.model.LatLng;
 
 import java.net.*;
 import java.io.*;
@@ -17,7 +16,7 @@ public class GoogleRoute {
 
     GoogleRoute() {}
 
-    JsonObject query() {
+    JsonObject getDistanceJson(String src, String dst) {
         //Derive URL from geocoded keyboard input using addressing syntax URL(URL(static), output?address + &key="key")
         JsonObject json = null;
         try {
@@ -25,33 +24,26 @@ public class GoogleRoute {
             int tries = 0;
             while(true) {
                 //Location to geoencode
-            	System.out.print("Enter a source address: ");
-            	Scanner source = new Scanner(System.in);
-                String in = source.nextLine();
-                char[] format = in.toCharArray();
+                char[] format = src.toCharArray();
                 int index = 0;
-                CharacterIterator it = new StringCharacterIterator(in);
+                CharacterIterator it = new StringCharacterIterator(src);
                 for(char ch = it.first(); ch != CharacterIterator.DONE; ch = it.next()) {
                     if(ch == ' ') format[index] = '+';
                     index++;
                 }
                 StringBuilder origin = new StringBuilder("origins=");
                 for(char ch : format) origin.append(ch);
-                
-                
-                System.out.print("Enter a destination address: ");
-                source = new Scanner(System.in);
-                in = source.nextLine();
-                format = in.toCharArray();
+
+                format = dst.toCharArray();
                 index = 0;
-                it = new StringCharacterIterator(in);
+                it = new StringCharacterIterator(dst);
                 for(char ch = it.first(); ch != CharacterIterator.DONE; ch = it.next()) {
                     if(ch == ' ') format[index] = '+';
                     index++;
                 }
                 StringBuilder destination = new StringBuilder("&destinations=");
                 for(char ch : format) destination.append(ch);
-                
+
                 URL request = new URL(stat, "json?" + origin + destination + "&driving=true&language=eng-US&units=imperial" + key);
                 BufferedReader br = new BufferedReader(new InputStreamReader(request.openStream()));
                 JsonReader jr = new JsonReader(br);
@@ -59,9 +51,9 @@ public class GoogleRoute {
                 json = parser.parse(jr).getAsJsonObject();
 
                 if(json.get("status").getAsString().equals("OK")) break;
-                else if(json.get("status").getAsString().equals("OVER_QUERY_LIMIT")) throw new OverQueryLimitException("Query limit exceeded during geocoding of location: " + in);
-                else if(json.get("status").getAsString().equals("INVALID_REQUEST")) throw new InvalidRequestException("Check the address, components and/or latlng fields of: " + in);
-                else if(json.get("status").getAsString().equals("REQUEST_DENIED")) throw new RequestDeniedException("The request was denied for the location: " + in);
+                else if(json.get("status").getAsString().equals("OVER_QUERY_LIMIT")) throw new OverQueryLimitException("Query limit exceeded on distance from: " + src + " to " + dst);
+                else if(json.get("status").getAsString().equals("INVALID_REQUEST")) throw new InvalidRequestException("Invalid parameters: " + src + ", " + dst);
+                else if(json.get("status").getAsString().equals("REQUEST_DENIED")) throw new RequestDeniedException("The request was denied during distance calculation from: " + src + "to " + dst);
                 else if(tries > 5) throw new TimeoutException("The request failed 5 times in a row, please try again later.");
                 tries++;
                 br.close();

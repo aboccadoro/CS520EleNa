@@ -1,5 +1,4 @@
 import com.google.gson.JsonObject;
-import com.google.maps.model.LatLng;
 import java.util.Scanner;
 
 public class EleNa {
@@ -7,31 +6,33 @@ public class EleNa {
     public static void main(String[] args) {
         System.out.println("Welcome to EleNa, a Google Maps project focusing on elevation gain on an x% shortest path between two locations.");
         System.out.print("Enter a source address: ");
-        Scanner source = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
+        String src = scan.nextLine();
         GMAP gmap = new GMAP();
-        JsonObject src = gmap.geocode(source);
+        JsonObject source = gmap.geocode(src);
         while (src == null) {
-            src = gmap.geocode(source);
+            source = gmap.geocode(src);
         }
-        double srcel = gmap.elevData(gmap.getCoords(src));
-        System.out.println(gmap.getCoords(src));
+        double srcel = gmap.elevData(gmap.getCoords(source));
+        System.out.println(gmap.getCoords(source));
         System.out.println(srcel);
         System.out.print("Enter a destination address: ");
-        source = new Scanner(System.in);
-        JsonObject dst = gmap.geocode(source);
+        scan = new Scanner(System.in);
+        String dst = scan.nextLine();
+        JsonObject destination = gmap.geocode(dst);
         while (dst == null) {
-            dst = gmap.geocode(source);
+            destination = gmap.geocode(dst);
         }
-        double dstel = gmap.elevData(gmap.getCoords(dst));
-        System.out.println(gmap.getCoords(dst));
+        double dstel = gmap.elevData(gmap.getCoords(destination));
+        System.out.println(gmap.getCoords(destination));
         System.out.println(dstel);
         System.out.println("\nElevation change: " + Math.abs(dstel - srcel));
         
         //route code
         GoogleRoute route = new GoogleRoute();
-        JsonObject json = route.query();
-        System.out.println(route.getDistanceText(json));
-        System.out.println(route.getDistance(json) + " meters");
+        JsonObject distance = route.getDistanceJson(src, dst);
+        System.out.println(route.getDistanceText(distance));
+        System.out.println(route.getDistance(distance) + " meters");
         
     }
 }

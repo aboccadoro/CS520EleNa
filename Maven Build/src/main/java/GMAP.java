@@ -6,7 +6,6 @@ import com.google.maps.model.LatLng;
 
 import java.net.*;
 import java.io.*;
-import java.util.Scanner;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.concurrent.TimeoutException;
@@ -17,7 +16,7 @@ class GMAP {
 
     GMAP() {}
 
-    JsonObject geocode(Scanner location) {
+    JsonObject geocode(String location) {
         //Derive URL from geocoded keyboard input using addressing syntax URL(URL(static), output?address + &key="key")
         JsonObject json = null;
         try {
@@ -25,10 +24,9 @@ class GMAP {
             int tries = 0;
             while(true) {
                 //Location to geoencode
-                String in = location.nextLine();
-                char[] format = in.toCharArray();
+                char[] format = location.toCharArray();
                 int index = 0;
-                CharacterIterator it = new StringCharacterIterator(in);
+                CharacterIterator it = new StringCharacterIterator(location);
                 for(char ch = it.first(); ch != CharacterIterator.DONE; ch = it.next()) {
                     if(ch == ' ') format[index] = '+';
                     index++;
@@ -42,9 +40,9 @@ class GMAP {
                 json = parser.parse(jr).getAsJsonObject();
 
                 if(json.get("status").getAsString().equals("OK")) break;
-                else if(json.get("status").getAsString().equals("OVER_QUERY_LIMIT")) throw new OverQueryLimitException("Query limit exceeded during geocoding of location: " + in);
-                else if(json.get("status").getAsString().equals("INVALID_REQUEST")) throw new InvalidRequestException("Check the address, components and/or latlng fields of: " + in);
-                else if(json.get("status").getAsString().equals("REQUEST_DENIED")) throw new RequestDeniedException("The request was denied for the location: " + in);
+                else if(json.get("status").getAsString().equals("OVER_QUERY_LIMIT")) throw new OverQueryLimitException("Query limit exceeded during geocoding of location: " + location);
+                else if(json.get("status").getAsString().equals("INVALID_REQUEST")) throw new InvalidRequestException("Check the address, components and/or latlng fields of: " + location);
+                else if(json.get("status").getAsString().equals("REQUEST_DENIED")) throw new RequestDeniedException("The request was denied for the location: " + location);
                 else if(tries > 5) throw new TimeoutException("The request failed 5 times in a row, please try again later.");
                 tries++;
                 br.close();
