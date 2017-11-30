@@ -2,8 +2,74 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="90444992-6950-4aa0-8b51-f3a8e851ea1f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/osmosis.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/default.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/osmosis.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/bin/osmosis" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/bin/osmosis-extract-apidb-0.6" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/bin/osmosis-extract-mysql-0.6" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/bin/osmosis.bat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/changes.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/config/plexus.conf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/copying.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/commons-codec-1.10.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/commons-compress-1.14.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/commons-dbcp-1.4.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/commons-logging-1.2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/commons-pool-1.5.4.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/jpf-1.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/mysql-connector-java-6.0.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/netty-3.10.6.Final.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-apidb-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-areafilter-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-core-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-dataset-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-extract-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-hstore-jdbc-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-osm-binary-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-pbf-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-pbf2-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-pgsimple-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-pgsnapshot-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-replication-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-replication-http-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-set-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-tagfilter-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-tagtransform-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/osmosis-xml-0.46.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/plexus-classworlds-2.5.2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/postgis-jdbc-2.2.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/postgresql-42.1.4.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/protobuf-java-3.4.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/spring-beans-4.3.11.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/spring-core-4.3.11.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/spring-jdbc-4.3.11.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/spring-tx-4.3.11.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/stax2-api-4.0.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/woodstox-core-5.0.3.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/xercesImpl-2.11.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/lib/osmosis/xml-apis-1.4.01.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/readme.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/contrib/CreateGeometryForWays.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/contrib/apidb_0.6.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/contrib/apidb_0.6_osmosis_xid_indexing.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/contrib/dump_apidb.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/contrib/replicate_osm_file.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/fix_line_endings.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/munin/README" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/munin/osm_replication.conf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/munin/osm_replication_lag" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsimple_load_0.6.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsimple_schema_0.6.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsimple_schema_0.6_action.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsimple_schema_0.6_bbox.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsimple_schema_0.6_linestring.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsnapshot_and_pgsimple.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsnapshot_load_0.6.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsnapshot_schema_0.6.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsnapshot_schema_0.6_action.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsnapshot_schema_0.6_bbox.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsnapshot_schema_0.6_linestring.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsnapshot_schema_0.6_upgrade_4-5.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/osmosis/script/pgsnapshot_schema_0.6_upgrade_5-6.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EleNa.iml" afterPath="$PROJECT_DIR$/EleNa.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/EleNa.java" afterPath="$PROJECT_DIR$/src/main/java/EleNa.java" />
@@ -28,7 +94,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/GMAP.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="129">
-              <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+              <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -52,8 +118,8 @@
       <file leaf-file-name="EleNa.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/EleNa.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="40" column="8" lean-forward="false" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -198,7 +264,7 @@
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/bin/osmosis/lib/osmosis" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/bin/xml-apis-1.4.01.jar!/" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -830,7 +896,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/GMAP.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="129">
-          <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+          <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -889,8 +955,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/EleNa.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="40" column="8" lean-forward="false" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -975,7 +1041,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>osmosis</last-edited>
+          <last-edited>commons-codec-1.10</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
