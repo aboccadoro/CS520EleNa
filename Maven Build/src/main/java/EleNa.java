@@ -1,5 +1,7 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.openstreetmap.osmosis.core.Osmosis;
+
 import java.util.Scanner;
 
 public class EleNa {
@@ -36,5 +38,6 @@ public class EleNa {
         System.out.println("Distance: " + route.getDistanceText(distance) + " " + "(" + route.getDistance(distance) + " meters)");
         System.out.println("\n");
         System.out.println("Path: " + route.getDirections(path));
+        
     }
 }
