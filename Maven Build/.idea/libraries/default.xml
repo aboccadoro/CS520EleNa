@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="default">
+    <CLASSES>
+      <root url="file://C:/osmosis/lib/default" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://C:/osmosis/lib/default" recursive="false" />
+  </library>
+</component>

@@ -1,3 +1,4 @@
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.Scanner;
 
@@ -26,13 +27,14 @@ public class EleNa {
         double dstel = gmap.elevData(gmap.getCoords(destination));
         System.out.println(gmap.getCoords(destination));
         System.out.println(dstel);
-        System.out.println("\nElevation change: " + Math.abs(dstel - srcel));
+        System.out.println("\nElevation change: " + (dstel - srcel));
         
         //route code
         GoogleRoute route = new GoogleRoute();
         JsonObject distance = route.getDistanceJson(src, dst);
-        System.out.println(route.getDistanceText(distance));
-        System.out.println(route.getDistance(distance) + " meters");
-        
+        JsonObject path = route.getDirectionsJson(src, dst);
+        System.out.println("Distance: " + route.getDistanceText(distance) + " " + "(" + route.getDistance(distance) + " meters)");
+        System.out.println("\n");
+        System.out.println("Path: " + route.getDirections(path));
     }
 }
