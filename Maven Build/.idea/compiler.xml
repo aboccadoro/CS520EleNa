@@ -9,7 +9,7 @@
         <module name="EleNa" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8">
+    <bytecodeTargetLevel>
       <module name="EleNa" target="1.5" />
     </bytecodeTargetLevel>
   </component>
