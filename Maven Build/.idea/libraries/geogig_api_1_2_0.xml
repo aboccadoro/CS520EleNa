@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="geogig-api-1.2.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/bin/geogig-api-1.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
