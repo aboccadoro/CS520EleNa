@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="geoserver-2">
+    <CLASSES>
+      <root url="file://D:/Downloads/geoserver-2.13-SNAPSHOT-geogig-plugin" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/Downloads/geoserver-2.13-SNAPSHOT-geogig-plugin" recursive="false" />
+  </library>
+</component>

@@ -62,5 +62,16 @@
             <artifactId>osmosis-xml</artifactId>
             <version>0.46</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.locationtech.geogig</groupId>
+            <artifactId>geogig-api</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geogig.osm</groupId>
+            <artifactId>geogig-plugins-osm</artifactId>
+            <version>1.2.0</version>
+        </dependency>
         </dependencies>
 </project>

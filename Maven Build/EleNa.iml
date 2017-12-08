@@ -9,7 +9,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="commons-dbcp-1.4" level="project" />
+    <orderEntry type="library" name="geogig-plugins-osm-1.2" level="project" />
+    <orderEntry type="library" name="geoserver-2" level="project" />
     <orderEntry type="library" name="Maven: com.google.maps:google-maps-services:0.1.12" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okhttp:okhttp:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.0.0" level="project" />
@@ -45,5 +46,7 @@
     <orderEntry type="library" name="Maven: org.openstreetmap.osmosis:osmosis-tagfilter:0.46" level="project" />
     <orderEntry type="library" name="Maven: org.openstreetmap.osmosis:osmosis-xml:0.46" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
+    <orderEntry type="library" name="Maven: org.locationtech.geogig:geogig-api:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.geogig.osm:geogig-plugins-osm:1.2.0" level="project" />
   </component>
 </module>

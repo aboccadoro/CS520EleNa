@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="geogig-plugins-osm-1.2">
+    <CLASSES>
+      <root url="file://D:/Downloads/geogig-plugins-osm-1.2.0/geogig-plugins-osm-1.2.0" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/Downloads/geogig-plugins-osm-1.2.0/geogig-plugins-osm-1.2.0" recursive="false" />
+  </library>
+</component>
