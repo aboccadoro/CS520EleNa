@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="Maven: org.geogig.osm:geogig-plugins-osm:1.2.0">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/geogig/osm/geogig-plugins-osm/1.2.0/geogig-plugins-osm-1.2.0.jar!/" />
+      <root url="jar://D:/Downloads/geogig-plugins-osm-1.2.0/geogig-plugins-osm-1.2.0/geogig-plugins-osm-1.2.0.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$MAVEN_REPOSITORY$/org/geogig/osm/geogig-plugins-osm/1.2.0/geogig-plugins-osm-1.2.0-javadoc.jar!/" />
