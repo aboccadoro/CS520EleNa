@@ -9,10 +9,10 @@ class ShortestPath
     // A utility function to find the vertex with minimum distance value,
     // from the set of vertices not yet included in shortest path tree
     static final int V=9;
-    int minDistance(int dist[], Boolean sptSet[])
+    double minDistance(double dist[], Boolean sptSet[])
     {
         // Initialize min value
-        int min = Integer.MAX_VALUE, min_index=-1;
+        double min = Integer.MAX_VALUE, min_index=-1;
  
         for (int v = 0; v < V; v++)
             if (sptSet[v] == false && dist[v] <= min)
@@ -25,7 +25,7 @@ class ShortestPath
     }
  
     // A utility function to print the constructed distance array
-    void printSolution(int dist[], int n)
+    void printSolution(double dist[], int n)
     {
         System.out.println("Vertex   Distance from Source");
         for (int i = 0; i < V; i++)
@@ -34,9 +34,9 @@ class ShortestPath
     // Funtion that implements Dijkstra's single source shortest path
     // algorithm for a graph represented using adjacency matrix
     // representation
-    void dijkstra(int graph[][], int src)
+    void dijkstra(double graph[][], double src)
     {
-        int dist[] = new int[V]; // The output array. dist[i] will hold
+        double dist[] = new double[V]; // The output array. dist[i] will hold
                                  // the shortest distance from src to i
  
         // sptSet[i] will true if vertex i is included in shortest
@@ -59,7 +59,7 @@ class ShortestPath
             // Pick the minimum distance vertex from the set of vertices
             // not yet processed. u is always equal to src in first
             // iteration.
-            int u = minDistance(dist, sptSet);
+            double u = minDistance(dist, sptSet);
  
             // Mark the picked vertex as processed
             sptSet[u] = true;
@@ -85,7 +85,7 @@ class ShortestPath
     public static void main (String[] args)
     {
         /* Let us create the example graph discussed above */
-       int graph[][] = new int[][]{{0, 4, 0, 0, 0, 0, 0, 8, 0},
+       double graph[][] = new double[][]{{0, 4, 0, 0, 0, 0, 0, 8, 0},
                                   {4, 0, 8, 0, 0, 0, 0, 11, 0},
                                   {0, 8, 0, 7, 0, 4, 0, 0, 2},
                                   {0, 0, 7, 0, 9, 14, 0, 0, 0},
