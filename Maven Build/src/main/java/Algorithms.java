@@ -51,7 +51,7 @@ class ShortestPath
         }
  
         // Distance of source vertex from itself is always 0
-        dist[src] = 0;
+        dist[(int)src] = 0;
  
         // Find shortest path for all vertices
         for (int count = 0; count < V-1; count++)
@@ -62,7 +62,7 @@ class ShortestPath
             double u = minDistance(dist, sptSet);
  
             // Mark the picked vertex as processed
-            sptSet[u] = true;
+            sptSet[(int)u] = true;
  
             // Update dist value of the adjacent vertices of the
             // picked vertex.
@@ -71,10 +71,10 @@ class ShortestPath
                 // Update dist[v] only if is not in sptSet, there is an
                 // edge from u to v, and total weight of path from src to
                 // v through u is smaller than current value of dist[v]
-                if (!sptSet[v] && graph[u][v]!=0 &&
-                        dist[u] != Integer.MAX_VALUE &&
-                        dist[u]+graph[u][v] < dist[v])
-                    dist[v] = dist[u] + graph[u][v];
+                if (!sptSet[v] && graph[(int)u][v]!=0 &&
+                        dist[(int)u] != Integer.MAX_VALUE &&
+                        dist[(int)u]+graph[(int)u][v] < dist[v])
+                    dist[v] = dist[(int)u] + graph[(int)u][v];
         }
  
         // print the constructed distance array

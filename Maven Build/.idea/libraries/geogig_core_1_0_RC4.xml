@@ -4,8 +4,6 @@
       <root url="jar://$PROJECT_DIR$/bin/geogig-core-1.0-RC4.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/bin/geogig-core-1.0-RC4-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

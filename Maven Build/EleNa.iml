@@ -12,10 +12,12 @@
     <orderEntry type="library" name="geogig-api-1.2.0" level="project" />
     <orderEntry type="library" name="geogig-plugins-osm-1.2.0" level="project" />
     <orderEntry type="library" name="guava-15.0-rc1" level="project" />
-    <orderEntry type="library" name="geogig-core-1.0-RC4" level="project" />
     <orderEntry type="library" name="guice-multibindings-3.0" level="project" />
     <orderEntry type="library" name="guice-4.0-beta-sources" level="project" />
     <orderEntry type="library" name="guice-3.0.0" level="project" />
+    <orderEntry type="library" name="asm-6.0" level="project" />
+    <orderEntry type="library" name="com.springsource.net.sf.cglib-2.2.0" level="project" />
+    <orderEntry type="library" name="geogig-core-1.0-RC4" level="project" />
     <orderEntry type="library" name="Maven: com.google.maps:google-maps-services:0.1.12" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okhttp:okhttp:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.0.0" level="project" />
@@ -57,5 +59,6 @@
     <orderEntry type="library" name="Maven: com.google.inject:guice:3.0" level="project" />
     <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-parent:6.0" level="project" />
   </component>
 </module>
