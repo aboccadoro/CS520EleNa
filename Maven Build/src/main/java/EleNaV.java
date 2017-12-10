@@ -4,11 +4,11 @@ import java.io.*;
 import java.net.URL;
 import javax.swing.*;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+
+import com.google.maps.model.LatLng;
 
 public class EleNaV {
     private JFrame gui = new JFrame("EleNa Test");
@@ -23,15 +23,15 @@ public class EleNaV {
     private JButton search = new JButton("Search");
     private JButton[] select = {new JButton("Select"), new JButton("Select")};
 
-    private JTextField[] input = {new JTextField("44.0026252,-71.3210986"), new JTextField("44.026098,-71.393097")};
+    private JTextField[] input = {new JTextField("44.002625,-71.321098"), new JTextField("44.026098,-71.393097")};
 
 
     private JLabel map = new JLabel();
     private JLabel elevGraph = new JLabel();
 
-    private double[] start = {44.0026252, -71.3210986};
-    private double[] center = {44.0026252, -71.3210986};
-    private double[] end = {44.026098, -71.393097};
+    private LatLng start = new LatLng(44.00262, -71.32109);
+    private LatLng center = new LatLng(44.00262, -71.32109);
+    private LatLng end = new LatLng(44.02609, -71.39309);
     private int zoomLevel = 2;
     private String path = "";
 
@@ -46,20 +46,24 @@ public class EleNaV {
     private MouseListener clicker = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
-            double mpP = 156543.03392 * Math.cos(center[0] * Math.PI / 180) / Math.pow(2, zoomLevel);
+            double mpP = 156543.03392 * Math.cos(center.lat * Math.PI / 180) / Math.pow(2, zoomLevel);
             boolean render = false;
             // Temp code
             if (select[0].getActionCommand().equals("pressed") && e.getButton() == 1) {
-                double[] latLong = {(center[0] + (mpP * (e.getY() - 319) * -1) / 110574), (center[1] + (mpP * (e.getX() - 319)) / (110574 * Math.cos(center[0] * Math.PI / 180)))};
+                LatLng latLong = new LatLng((center.lat + (mpP * (e.getY() - 319) * -1) / 110574), (center.lng + (mpP * (e.getX() - 319)) / (110574 * Math.cos(center.lat * Math.PI / 180))));
+                latLong.lat = Math.floor(latLong.lat * Math.pow(10, 5)) / Math.pow(10, 5);
+                latLong.lng = Math.floor(latLong.lng * Math.pow(10, 5)) / Math.pow(10, 5);
                 start = latLong;
-                input[0].setText(latLong[0] + "," + latLong[1]);
+                input[0].setText(latLong.toString());
                 select[0].setActionCommand("");
                 select[1].setEnabled(true);
                 render = true;
             } else if (select[1].getActionCommand().equals("pressed") && e.getButton() == 1) {
-                double[] latLong = {(center[0] + (mpP * (e.getY() - 319) * -1) / 110574), (center[1] + (mpP * (e.getX() - 319)) / (110574 * Math.cos(center[0] * Math.PI / 180)))};
-                input[1].setText(latLong[0] + "," + latLong[1]);
+                LatLng latLong = new LatLng((center.lat + (mpP * (e.getY() - 319) * -1) / 110574), (center.lng + (mpP * (e.getX() - 319)) / (110574 * Math.cos(center.lat * Math.PI / 180))));
+                latLong.lat = Math.floor(latLong.lat * Math.pow(10, 5)) / Math.pow(10, 5);
+                latLong.lng = Math.floor(latLong.lng * Math.pow(10, 5)) / Math.pow(10, 5);
                 end = latLong;
+                input[1].setText(latLong.toString());
                 select[1].setActionCommand("");
                 select[0].setEnabled(true);
                 render = true;
@@ -68,15 +72,17 @@ public class EleNaV {
 
             // MouseWheelListener not used to reduce amount of polls to Google
             if (e.getClickCount() >= 2 && e.getButton() == 1) {
-                zoomLevel++;
+                zoomLevel = Math.min(20, zoomLevel + 1);
                 render = true;
             } else if (e.getClickCount() >= 2 && e.getButton() == 3) {
-                zoomLevel--;
+                zoomLevel = Math.max(1, zoomLevel - 1);
                 render = true;
             } else if (e.getButton() == 3 && e.getClickCount() == 1 && e.isShiftDown()) {
-                center[0] = (center[0] + (mpP * (e.getY() - 319) * -1) / 110574);
-                center[1] = (center[1] + (mpP * (e.getX() - 319)) / (110574 * Math.cos(center[0] * Math.PI / 180)));
-                System.out.println("Long:" + center[0] + "Lat:" + center[1]);
+                center.lat = (center.lat + (mpP * (e.getY() - 319) * -1) / 110574);
+                center.lng = (center.lng + (mpP * (e.getX() - 319)) / (110574 * Math.cos(center.lat * Math.PI / 180)));
+                center.lat = Math.floor(center.lat * Math.pow(10, 5)) / Math.pow(10, 5);
+                center.lng = Math.floor(center.lng * Math.pow(10, 5)) / Math.pow(10, 5);
+                System.out.println("LatLong:" + center.toString());
                 render = true;
             }
             if (render) {
@@ -103,9 +109,12 @@ public class EleNaV {
 
     private ActionListener radiiTest = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
+            start.lat = Double.parseDouble(input[0].getText().split(",")[0]);
+            start.lng = Double.parseDouble(input[0].getText().split(",")[1]);
+            end.lat = Double.parseDouble(input[1].getText().split(",")[0]);
+            end.lng = Double.parseDouble(input[1].getText().split(",")[1]);
             BufferedReader reader;
             JsonObject json;
-            JsonArray test;
             String route;
             NodeGraph node;
             try {
@@ -120,9 +129,13 @@ public class EleNaV {
                 JsonParser parser = new JsonParser();
                 json = parser.parse(jr).getAsJsonObject();
                 route = json.get("routes").getAsJsonArray().get(0).getAsJsonObject().get("overview_polyline").getAsJsonObject().get("points").getAsString();
-                test = json.get("routes").getAsJsonArray().get(0).getAsJsonObject().get("legs").getAsJsonArray().get(0).getAsJsonObject().get("steps").getAsJsonArray();
-                node = new NodeGraph(start, end);
-                markers = node.roadPoints();
+
+                // Experimental Code # Uncomment to crash
+                //node = new NodeGraph(start, end, json.get("routes").getAsJsonArray().get(0).getAsJsonObject().get("legs").getAsJsonArray().get(0).getAsJsonObject().get("distance").getAsJsonObject().get("value").getAsInt());
+                //node.roadPoints().toString();
+                //markers = node.toString();
+                //System.out.println(node.toString());
+                // End
                 path = route;
                 renderMap();
                 renderElevation(100);
@@ -188,7 +201,7 @@ public class EleNaV {
         BufferedReader reader;
         JsonObject json;
         double maxElev = 0;
-        double minElev = 100;
+        double minElev = 100000;
         double[] elevArray = new double[samples];
         // Redundant if elevation Data came from elsewhere
         try {
@@ -250,15 +263,12 @@ public class EleNaV {
     public void renderMap() throws IOException {
         try {
             String imageUrl = "https://maps.googleapis.com/maps/api/staticmap?center="
-                    + center[0] + "," + center[1]
+                    + center.toString()
                     + "&zoom=" + zoomLevel
                     + "&path=enc:" + path
                     + "&size=640x640&scale=2&maptype=roadmap"
-                    + "&markers=size:mid|color:red|"
-                    + center[0] + ","
-                    + center[1] + "|"
-                    + "&markers=size:mid|color:blue|" + input[0].getText() + "|"
-                    + "&markers=size:mid|color:red|" + input[1].getText() + "|"
+                    + "&markers=size:mid|color:blue|" + input[0].getText()
+                    + "&markers=size:mid|color:red|" + input[1].getText()
                     + "&markers=size:small|color:green|" + markers
                     + "&key=AIzaSyAO1sUMxigsq0jqP_p9t5PVDtb25Jfu5Zc";
             String destFile = "image.jpg";
