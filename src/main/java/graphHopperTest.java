@@ -3,7 +3,9 @@ import com.graphhopper.GHRequest;
 import com.graphhopper.GHResponse;
 import com.graphhopper.GraphHopper;
 import com.graphhopper.PathWrapper;
+import com.graphhopper.reader.dem.SRTMProvider;
 import com.graphhopper.reader.osm.GraphHopperOSM;
+import com.graphhopper.routing.AlternativeRoute;
 import com.graphhopper.routing.util.EncodingManager;
 import com.graphhopper.util.Instruction;
 import com.graphhopper.util.InstructionList;
@@ -36,6 +38,8 @@ public class graphHopperTest {
 // where to store graphhopper files?
         hopper.setGraphHopperLocation("graph/");
         hopper.setEncodingManager(new EncodingManager("foot"));
+        hopper.setElevationProvider(new SRTMProvider());
+        hopper.setElevation(true);
 
 // now this can take minutes if it imports or a few seconds for loading
 // of course this is dependent on the area you import
@@ -66,12 +70,15 @@ public class graphHopperTest {
         InstructionList il = path.getInstructions();
         for(GHPoint3D x:path.getPoints()){
             out.add(new LatLng(x.toGeoJson()[1],x.toGeoJson()[0]));
+            System.out.println(x.toString());
         }
 // iterate over every turn instruction
         for (Instruction instruction : il) {
             instruction.getDistance();
             System.out.println(instruction.getName()+". Distance: "+instruction.getDistance());
         }
+
+        System.out.println(path.getAscend());
 
 // or get the json
         List<Map<String, Object>> iList = il.createJson();
