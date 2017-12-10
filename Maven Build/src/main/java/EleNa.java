@@ -1,5 +1,5 @@
 import com.google.gson.JsonObject;
-import org.openstreetmap.osmosis.core.Osmosis;
+//import org.openstreetmap.osmosis.core.Osmosis;
 
 import java.util.Scanner;
 
