@@ -3,10 +3,15 @@ public class MapPath {
 	private double totalDistance;
 	private MapNode startNode;
 	private MapNode currentNode;
+	private MapNode[] nodelist;
+	private int nodesInPath;
 	public MapPath(MapNode startNode) {
 		this.startNode = startNode;
 		currentNode = startNode;
 		totalDistance = 0;
+		nodesInPath = 0;
+		nodelist = new MapNode[1];
+		nodelist[0] = startNode;
 	}
 	public double getTotalDistance() {
 		return totalDistance;
@@ -19,6 +24,19 @@ public class MapPath {
 		else {
 			throw new NodeNotFoundException("Node was not found.");
 		}
+		MapNode[] temp = new MapNode[nodelist.length + 1];
+		for(int i = 0; i < nodelist.length; i++) {
+			temp[i] = nodelist[i];
+		}
+		temp[nodelist.length] = node;
+		nodelist = temp;
+	}
+	public MapNode[] getSubPath(int x, int y) {
+		MapNode[] sublist = new MapNode[y-x+1];
+		for(int i = 0; i <= y-x; i++) {
+			sublist[i] = nodelist[i+x-1];
+		}
+		return sublist;
 	}
 	
 }
