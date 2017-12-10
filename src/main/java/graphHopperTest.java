@@ -35,7 +35,7 @@ public class graphHopperTest {
         hopper.setDataReaderFile("north-america_us_massachusetts.pbf");
 // where to store graphhopper files?
         hopper.setGraphHopperLocation("graph/");
-        hopper.setEncodingManager(new EncodingManager("car"));
+        hopper.setEncodingManager(new EncodingManager("foot"));
 
 // now this can take minutes if it imports or a few seconds for loading
 // of course this is dependent on the area you import
@@ -44,7 +44,7 @@ public class graphHopperTest {
 // simple configuration of the request object, see the GraphHopperServlet classs for more possibilities.
         GHRequest req = new GHRequest(start.lat, start.lng, end.lat, end.lng).
                 setWeighting("fastest").
-                setVehicle("car").
+                setVehicle("foot").
                 setLocale(Locale.US);
         GHResponse rsp = hopper.route(req);
 
