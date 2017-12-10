@@ -21,6 +21,8 @@ import java.util.Map;
  * 1. Least Elevation Gain
  * 2. Most Elevation Gain
  * 3. Shortest Path
+ * Please download the MA map data. (225MB)
+ * http://download.geofabrik.de/north-america/us/massachusetts.html
  */
 public class graphHopperTest {
 
@@ -30,7 +32,7 @@ public class graphHopperTest {
 
         // create one GraphHopper instance
         GraphHopper hopper = new GraphHopperOSM().forServer();
-        hopper.setDataReaderFile("MAways.osm.pbf");
+        hopper.setDataReaderFile("north-america_us_massachusetts.pbf");
 // where to store graphhopper files?
         hopper.setGraphHopperLocation("../");
         hopper.setEncodingManager(new EncodingManager("car"));
