@@ -10,6 +10,7 @@ import com.graphhopper.util.InstructionList;
 import com.graphhopper.util.PointList;
 import com.graphhopper.util.shapes.GHPoint3D;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -26,9 +27,8 @@ import java.util.Map;
  */
 public class graphHopperTest {
 
-    public static void main(String args[]) {
-        LatLng start = new LatLng(42.566650,-72.423530);
-        LatLng end = new LatLng(42.551630,-72.447720);
+    public static LinkedList<LatLng> pather(LatLng start, LatLng end) {
+        LinkedList<LatLng> out = new LinkedList<LatLng>();
 
         // create one GraphHopper instance
         GraphHopper hopper = new GraphHopperOSM().forServer();
@@ -64,16 +64,17 @@ public class graphHopperTest {
         long timeInMs = path.getTime();
 
         InstructionList il = path.getInstructions();
+        for(GHPoint3D x:path.getPoints()){
+            out.add(new LatLng(x.toGeoJson()[1],x.toGeoJson()[0]));
+        }
 // iterate over every turn instruction
         for (Instruction instruction : il) {
             instruction.getDistance();
-            for(GHPoint3D x:instruction.getPoints()){
-                System.out.println(x.toString());
-            }
             System.out.println(instruction.getName()+". Distance: "+instruction.getDistance());
         }
 
 // or get the json
         List<Map<String, Object>> iList = il.createJson();
+        return out;
     }
 }

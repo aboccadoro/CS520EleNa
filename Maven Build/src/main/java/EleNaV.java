@@ -9,6 +9,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 import com.google.maps.model.LatLng;
+import com.google.maps.internal.PolylineEncoding;
 
 public class EleNaV {
     private JFrame gui = new JFrame("EleNa Test");
@@ -23,15 +24,15 @@ public class EleNaV {
     private JButton search = new JButton("Search");
     private JButton[] select = {new JButton("Select"), new JButton("Select")};
 
-    private JTextField[] input = {new JTextField("44.002625,-71.321098"), new JTextField("44.026098,-71.393097")};
+    private JTextField[] input = {new JTextField("42.391670,-71.170700"), new JTextField("42.380180,-71.200340")};
 
 
     private JLabel map = new JLabel();
     private JLabel elevGraph = new JLabel();
 
-    private LatLng start = new LatLng(44.00262, -71.32109);
-    private LatLng center = new LatLng(44.00262, -71.32109);
-    private LatLng end = new LatLng(44.02609, -71.39309);
+    private LatLng start = new LatLng(42.391670,-71.170700);
+    private LatLng center = new LatLng(42.391670,-71.170700);
+    private LatLng end = new LatLng(42.380180,-71.200340);
     private int zoomLevel = 2;
     private String path = "";
 
@@ -113,37 +114,51 @@ public class EleNaV {
             start.lng = Double.parseDouble(input[0].getText().split(",")[1]);
             end.lat = Double.parseDouble(input[1].getText().split(",")[0]);
             end.lng = Double.parseDouble(input[1].getText().split(",")[1]);
-            BufferedReader reader;
-            JsonObject json;
-            String route;
-            NodeGraph node;
-            try {
-                String graphURL = "https://maps.googleapis.com/maps/api/directions/json?origin="
-                        + input[0].getText()
-                        + "&destination="
-                        + input[1].getText()
-                        + "&mode=walking";
-                URL url = new URL(graphURL);
-                reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                JsonReader jr = new JsonReader(reader);
-                JsonParser parser = new JsonParser();
-                json = parser.parse(jr).getAsJsonObject();
-                route = json.get("routes").getAsJsonArray().get(0).getAsJsonObject().get("overview_polyline").getAsJsonObject().get("points").getAsString();
-
-                // Experimental Code # Uncomment to crash
-                //node = new NodeGraph(start, end, json.get("routes").getAsJsonArray().get(0).getAsJsonObject().get("legs").getAsJsonArray().get(0).getAsJsonObject().get("distance").getAsJsonObject().get("value").getAsInt());
-                //node.roadPoints().toString();
-                //markers = node.toString();
-                //System.out.println(node.toString());
-                // End
-                path = route;
+            try{
+                getPath();
+                getGHPath();
                 renderMap();
                 renderElevation(100);
-            } catch (IOException x) {
+            }catch (IOException x){
                 System.exit(1);
             }
         }
     };
+
+    private void getPath(){
+        BufferedReader reader;
+        JsonObject json;
+        String route;
+//        NodeGraph node;
+        try {
+            String graphURL = "https://maps.googleapis.com/maps/api/directions/json?origin="
+                    + input[0].getText()
+                    + "&destination="
+                    + input[1].getText()
+                    + "&mode=walking";
+            URL url = new URL(graphURL);
+            reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            JsonReader jr = new JsonReader(reader);
+            JsonParser parser = new JsonParser();
+            json = parser.parse(jr).getAsJsonObject();
+            route = json.get("routes").getAsJsonArray().get(0).getAsJsonObject().get("overview_polyline").getAsJsonObject().get("points").getAsString();
+
+            // Experimental Code # Uncomment to crash
+            //node = new NodeGraph(start, end, json.get("routes").getAsJsonArray().get(0).getAsJsonObject().get("legs").getAsJsonArray().get(0).getAsJsonObject().get("distance").getAsJsonObject().get("value").getAsInt());
+            //node.roadPoints().toString();
+            //markers = node.toString();
+            //System.out.println(node.toString());
+            // End
+            path = route;
+        } catch (IOException x) {
+            System.exit(1);
+        }
+    }
+
+    private void getGHPath(){
+        path = PolylineEncoding.encode(graphHopperTest.pather(start,end));
+        System.out.println(markers);
+    }
 
     /*
      * End Controller Methods.
@@ -213,6 +228,7 @@ public class EleNaV {
             JsonReader jr = new JsonReader(reader);
             JsonParser parser = new JsonParser();
             json = parser.parse(jr).getAsJsonObject();
+            System.out.println(json);
             for (int i = 0; i < samples; i++) {
                 elevArray[i] = json.get("results").getAsJsonArray().get(i).getAsJsonObject().get("elevation").getAsDouble();
                 if (elevArray[i] > maxElev) {
