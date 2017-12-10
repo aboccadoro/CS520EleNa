@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="geogig-core-1.0-RC4">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/bin/geogig-core-1.0-RC4.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

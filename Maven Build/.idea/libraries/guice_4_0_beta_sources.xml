@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="guice-4.0-beta-sources">
-    <CLASSES />
-    <JAVADOC />
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/bin/guice-4.0-beta-sources.jar!/" />
-    </SOURCES>
-  </library>
-</component>
