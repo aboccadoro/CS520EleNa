@@ -14,6 +14,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * This class doesn't even work the way it was supposed to,
+ * but it makes ALMOST EVERY CLASS we have redundant.
+ * The only thing is class needs is a custom weight for all 3 of our outputs
+ * 1. Least Elevation Gain
+ * 2. Most Elevation Gain
+ * 3. Shortest Path
+ */
 public class graphHopperTest {
 
     public static void main(String args[]) {
