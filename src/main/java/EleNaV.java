@@ -208,6 +208,7 @@ public class EleNaV {
         elevPanel_init();
         wrapper_init();
         gui.add(wrapper);
+        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setVisible(true);
         gui.pack();
     }
@@ -307,10 +308,8 @@ public class EleNaV {
                         java.awt.Image.SCALE_SMOOTH));
         map.setIcon(mapIcon);
     }
-
     public static void main(String[] args) throws IOException {
         EleNaV frame = new EleNaV();
-        frame.zoomLevel = 16;
         frame.renderMap();
     }
 }
