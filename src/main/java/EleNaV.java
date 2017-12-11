@@ -132,8 +132,15 @@ public class EleNaV {
             start.lng = Double.parseDouble(input[0].getText().split(",")[1]);
             end.lat = Double.parseDouble(input[1].getText().split(",")[0]);
             end.lng = Double.parseDouble(input[1].getText().split(",")[1]);
+            center.lat = (start.lat+end.lat)/2;
+            center.lng = (start.lng+end.lng)/2;
+            double distTo = Math.sqrt(Math.pow(start.lat - end.lat, 2) + Math.pow(start.lng - end.lng, 2));
+            //Math.cos(center.lat * Math.PI / 180) / mpp  =  Math.pow(2, zoomLevel)
+            zoomLevel = (int)(Math.ceil(Math.log(Math.cos(center.lat * Math.PI / 180)/(distTo/640))/Math.log(2)));
+            System.out.println(zoomLevel);
+
             try{
-                getPath();
+                //getPath();
                 getGHPath();
                 renderMap();
                 renderElevation(100);

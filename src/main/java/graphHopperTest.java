@@ -86,7 +86,7 @@ public class graphHopperTest {
 // iterate over every turn instruction
         for (Instruction instruction : il) {
             instruction.getDistance();
-            System.out.println(instruction.getName()+". Distance: "+instruction.getDistance());
+            //System.out.println(instruction.getName()+". Distance: "+instruction.getDistance());
         }
 
         System.out.println(path.getAscend());
