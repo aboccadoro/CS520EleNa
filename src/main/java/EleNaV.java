@@ -2,7 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.URL;
+import java.util.LinkedList;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -21,11 +23,13 @@ public class EleNaV {
     private JPanel mapPanel = new JPanel();
     private JPanel elevPanel = new JPanel(new FlowLayout());
 
+    private JPanel modePanel = new JPanel(new FlowLayout());
+
     private JButton search = new JButton("Search");
     private JButton[] select = {new JButton("Select"), new JButton("Select")};
+    private JButton[] pathB = new JButton[3];
 
     private JTextField[] input = {new JTextField("42.391670,-71.170700"), new JTextField("42.380180,-71.200340")};
-
 
     private JLabel map = new JLabel();
     private JLabel elevGraph = new JLabel();
@@ -33,8 +37,9 @@ public class EleNaV {
     private LatLng start = new LatLng(42.391670,-71.170700);
     private LatLng center = new LatLng(42.391670,-71.170700);
     private LatLng end = new LatLng(42.380180,-71.200340);
-    private int zoomLevel = 2;
-    private String path = "";
+    private int zoomLevel = 8;
+    private String[] path = {"","",""};
+    private int pathMode = 0;
 
     private String markers = "";
 
@@ -108,6 +113,19 @@ public class EleNaV {
         }
     };
 
+    private ActionListener pathMode_AL = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            JButton button = (JButton) e.getSource();
+            pathMode = Integer.parseInt(button.getName());
+            try{
+                renderMap();
+                renderElevation(100);
+            }catch (IOException x){
+                System.exit(1);
+            }
+        }
+    };
+
     private ActionListener radiiTest = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             start.lat = Double.parseDouble(input[0].getText().split(",")[0]);
@@ -149,14 +167,17 @@ public class EleNaV {
             //markers = node.toString();
             //System.out.println(node.toString());
             // End
-            path = route;
+            path[0] = route;
         } catch (IOException x) {
             System.exit(1);
         }
     }
 
     private void getGHPath(){
-        path = PolylineEncoding.encode(graphHopperTest.pather(start,end));
+        LinkedList<LatLng>[] in = graphHopperTest.pather(start,end);
+        for(int i=0;i<3;i++){
+            path[i] = PolylineEncoding.encode(in[i]);
+        }
         System.out.println(markers);
     }
 
@@ -176,10 +197,18 @@ public class EleNaV {
             ioPanel.add(input[i]);
             ioPanel.add(select[i]);
         }
+        String[] temp = {"Shortest Path", "Most Elevation Gain", "Least Elevation Gain"};
+        for(int i=0;i<3;i++){
+            pathB[i] = new JButton(temp[i]);
+            pathB[i].addActionListener(pathMode_AL);
+            pathB[i].setName(Integer.toString(i));
+            modePanel.add(pathB[i]);
+        }
         search.addActionListener(radiiTest);
         SpringUtilities.makeCompactGrid(ioPanel, 2, 3, 6, 6, 6, 6);
         ioWrapper.add(ioPanel, BorderLayout.CENTER);
         ioWrapper.add(search, BorderLayout.LINE_END);
+        ioWrapper.add(modePanel, BorderLayout.PAGE_END);
     }
 
     // Helper Method
@@ -222,7 +251,7 @@ public class EleNaV {
         // Redundant if elevation Data came from elsewhere
         try {
             String elevURL = "https://maps.googleapis.com/maps/api/elevation/json?"
-                    + "path=enc:" + path
+                    + "path=enc:" + path[pathMode]
                     + "&samples=" + samples;
             URL url = new URL(elevURL);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -282,7 +311,7 @@ public class EleNaV {
             String imageUrl = "https://maps.googleapis.com/maps/api/staticmap?center="
                     + center.toString()
                     + "&zoom=" + zoomLevel
-                    + "&path=enc:" + path
+                    + "&path=enc:" + path[pathMode]
                     + "&size=640x640&scale=2&maptype=roadmap"
                     + "&markers=size:mid|color:blue|" + input[0].getText()
                     + "&markers=size:mid|color:red|" + input[1].getText()

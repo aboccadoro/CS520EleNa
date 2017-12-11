@@ -1,15 +1,16 @@
 import com.google.maps.model.LatLng;
-import com.graphhopper.GHRequest;
-import com.graphhopper.GHResponse;
-import com.graphhopper.GraphHopper;
-import com.graphhopper.PathWrapper;
+import com.graphhopper.*;
 import com.graphhopper.reader.dem.SRTMProvider;
 import com.graphhopper.reader.osm.GraphHopperOSM;
 import com.graphhopper.routing.AlternativeRoute;
 import com.graphhopper.routing.util.EncodingManager;
-import com.graphhopper.util.Instruction;
-import com.graphhopper.util.InstructionList;
-import com.graphhopper.util.PointList;
+import com.graphhopper.routing.util.FootFlagEncoder;
+import com.graphhopper.routing.util.TraversalMode;
+import com.graphhopper.routing.weighting.AbstractWeighting;
+import com.graphhopper.storage.GHDirectory;
+import com.graphhopper.storage.Graph;
+import com.graphhopper.storage.GraphHopperStorage;
+import com.graphhopper.util.*;
 import com.graphhopper.util.shapes.GHPoint3D;
 
 import java.util.LinkedList;
@@ -29,13 +30,13 @@ import java.util.Map;
  */
 public class graphHopperTest {
 
-    public static LinkedList<LatLng> pather(LatLng start, LatLng end) {
-        LinkedList<LatLng> out = new LinkedList<LatLng>();
+    public static LinkedList<LatLng>[] pather(LatLng start, LatLng end) {
 
         // create one GraphHopper instance
         GraphHopper hopper = new GraphHopperOSM().forServer();
-        hopper.setDataReaderFile("north-america_us_massachusetts.pbf");
+        hopper.setDataReaderFile("file.pbf");
 // where to store graphhopper files?
+        hopper.setCHEnabled(false);
         hopper.setGraphHopperLocation("graph/");
         hopper.setEncodingManager(new EncodingManager("foot"));
         hopper.setElevationProvider(new SRTMProvider());
@@ -50,6 +51,8 @@ public class graphHopperTest {
                 setWeighting("fastest").
                 setVehicle("foot").
                 setLocale(Locale.US);
+        req.setAlgorithm(Parameters.Algorithms.ALT_ROUTE);
+        req.getHints().put(Parameters.Algorithms.AltRoute.MAX_PATHS, "3");
         GHResponse rsp = hopper.route(req);
 
 // first check for errors
@@ -67,10 +70,18 @@ public class graphHopperTest {
         double distance = path.getDistance();
         long timeInMs = path.getTime();
 
+        LinkedList<LatLng>[] out = new LinkedList[3];
+
         InstructionList il = path.getInstructions();
-        for(GHPoint3D x:path.getPoints()){
-            out.add(new LatLng(x.toGeoJson()[1],x.toGeoJson()[0]));
-            System.out.println(x.toString());
+        int count = 0;
+        for(PathWrapper k:rsp.getAll()){
+            LinkedList<LatLng> temp = new LinkedList<LatLng>();
+            System.out.println("\nPath:");
+            for(GHPoint3D x:k.getPoints()){
+                System.out.print(x.toString()+" ");
+                temp.add(new LatLng(x.toGeoJson()[1],x.toGeoJson()[0]));
+            }
+            out[count++] = temp;
         }
 // iterate over every turn instruction
         for (Instruction instruction : il) {
