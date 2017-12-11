@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.URL;
 import java.util.LinkedList;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -12,6 +11,9 @@ import com.google.gson.stream.JsonReader;
 
 import com.google.maps.model.LatLng;
 import com.google.maps.internal.PolylineEncoding;
+import com.graphhopper.PathWrapper;
+import com.graphhopper.util.PointList;
+import com.graphhopper.util.shapes.GHPoint3D;
 
 public class EleNaV {
     private JFrame gui = new JFrame("EleNa Test");
@@ -24,12 +26,19 @@ public class EleNaV {
     private JPanel elevPanel = new JPanel(new FlowLayout());
 
     private JPanel modePanel = new JPanel(new FlowLayout());
+    private JPanel infoPanel = new JPanel(new FlowLayout());
 
     private JButton search = new JButton("Search");
     private JButton[] select = {new JButton("Select"), new JButton("Select")};
     private JButton[] pathB = new JButton[3];
 
     private JTextField[] input = {new JTextField("42.391670,-71.170700"), new JTextField("42.380180,-71.200340")};
+
+    private JTextField[] info = {new JTextField(8), new JTextField(8), new JTextField(8), new JTextField(8)};
+    private double[] dist = {0,0,0};
+    private int[] time = {0,0,0};
+    private double[] eGain = {0,0,0};
+    private double[] eLoss = {0,0,0};
 
     private JLabel map = new JLabel();
     private JLabel elevGraph = new JLabel();
@@ -135,7 +144,6 @@ public class EleNaV {
             center.lat = (start.lat+end.lat)/2;
             center.lng = (start.lng+end.lng)/2;
             double distTo = Math.sqrt(Math.pow(start.lat - end.lat, 2) + Math.pow(start.lng - end.lng, 2));
-            //Math.cos(center.lat * Math.PI / 180) / mpp  =  Math.pow(2, zoomLevel)
             zoomLevel = (int)(Math.ceil(Math.log(Math.cos(center.lat * Math.PI / 180)/(distTo/640))/Math.log(2)));
             System.out.println(zoomLevel);
 
@@ -181,9 +189,17 @@ public class EleNaV {
     }
 
     private void getGHPath(){
-        LinkedList<LatLng>[] in = graphHopperTest.pather(start,end);
-        for(int i=0;i<3;i++){
-            path[i] = PolylineEncoding.encode(in[i]);
+        PathWrapper[] in = graphHopperTest.pather(start,end);
+        for(int i =0;i<3;i++){
+            LinkedList<LatLng> temp = new LinkedList<LatLng>();
+            for(GHPoint3D x:in[i].getPoints()){
+                temp.add(new LatLng(x.toGeoJson()[1],x.toGeoJson()[0]));
+            }
+            path[i] = PolylineEncoding.encode(temp);
+            dist[i] = Math.round(in[i].getDistance()*Math.pow(10,3))/Math.pow(10,3);
+            time[i] = (int)in[i].getTime();
+            eGain[i] = in[i].getAscend();
+            eLoss[i] = in[i].getDescend();
         }
         System.out.println(markers);
     }
@@ -223,6 +239,14 @@ public class EleNaV {
         mapPanel.setPreferredSize(new Dimension(640, 640));
         map.addMouseListener(clicker);
         mapPanel.add(map);
+        String[] labels = {"Distance","Time","Elevation Gain", "Elevation loss"};
+        for (int i = 0; i < 4; i++) {
+            JLabel l = new JLabel(labels[i], JLabel.TRAILING);
+            infoPanel.add(l);
+            l.setLabelFor(info[i]);
+            infoPanel.add(info[i]);
+        }
+        mapPanel.add(infoPanel);
     }
 
     // Helper Method
@@ -231,22 +255,56 @@ public class EleNaV {
     }
 
     private void wrapper_init() {
-        wrapper.setPreferredSize(new Dimension(640, 885));
+        wrapper.setPreferredSize(new Dimension(640, 950));
         wrapper.add(ioWrapper, BorderLayout.PAGE_START);
-        wrapper.add(elevPanel, BorderLayout.PAGE_END);
         wrapper.add(mapPanel, BorderLayout.CENTER);
+        wrapper.add(elevPanel, BorderLayout.PAGE_END);
     }
 
     public EleNaV() throws IOException {
         renderMap();
+        renderElevation();
         ioPanel_init();
         mapPanel_init();
         elevPanel_init();
         wrapper_init();
         gui.add(wrapper);
+        gui.setResizable(false);
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setVisible(true);
         gui.pack();
+    }
+
+    public void renderElevation(){
+        double maxElev = 0;
+        double minElev = 100;
+        try {
+            String chartURL = "https://chart.apis.google.com/chart?"
+                    + "cht=lc&chs=600x160&chl=Elevation&chco=orange"
+                    + "&chds="
+                    + minElev + "," + maxElev
+                    + "&chxt=x,y"
+                    + "&chxr=1,"
+                    + minElev + "," + maxElev;
+            String destFile = "elev.jpg";
+            URL url = new URL(chartURL);
+            InputStream is = url.openStream();
+            OutputStream os = new FileOutputStream(destFile);
+            byte[] b = new byte[2048];
+            int length;
+            while ((length = is.read(b)) != -1) {
+                os.write(b, 0, length);
+            }
+            is.close();
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        ImageIcon elevIcon = new ImageIcon((new ImageIcon("elev.jpg"))
+                .getImage().getScaledInstance(640, 160,
+                        java.awt.Image.SCALE_SMOOTH));
+        elevGraph.setIcon(elevIcon);
     }
 
     public void renderElevation(int samples) throws IOException {
@@ -343,6 +401,10 @@ public class EleNaV {
                 .getImage().getScaledInstance(640, 640,
                         java.awt.Image.SCALE_SMOOTH));
         map.setIcon(mapIcon);
+        info[0].setText(Double.toString(dist[pathMode]));
+        info[1].setText(Double.toString(time[pathMode]));
+        info[2].setText(Double.toString(eGain[pathMode]));
+        info[3].setText(Double.toString(eLoss[pathMode]));
     }
     public static void main(String[] args) throws IOException {
         EleNaV frame = new EleNaV();

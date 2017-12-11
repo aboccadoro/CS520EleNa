@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class graphHopperTest {
 
-    public static LinkedList<LatLng>[] pather(LatLng start, LatLng end) {
+    public static PathWrapper[] pather(LatLng start, LatLng end) {
 
         // create one GraphHopper instance
         GraphHopper hopper = new GraphHopperOSM().forServer();
@@ -70,18 +70,19 @@ public class graphHopperTest {
         double distance = path.getDistance();
         long timeInMs = path.getTime();
 
-        LinkedList<LatLng>[] out = new LinkedList[3];
+        PathWrapper[] out = new PathWrapper[3];
 
         InstructionList il = path.getInstructions();
         int count = 0;
         for(PathWrapper k:rsp.getAll()){
-            LinkedList<LatLng> temp = new LinkedList<LatLng>();
-            System.out.println("\nPath:");
-            for(GHPoint3D x:k.getPoints()){
-                System.out.print(x.toString()+" ");
-                temp.add(new LatLng(x.toGeoJson()[1],x.toGeoJson()[0]));
-            }
-            out[count++] = temp;
+            out[count++] = k;
+//            LinkedList<LatLng> temp = new LinkedList<LatLng>();
+//            System.out.println("\nPath:");
+//            for(GHPoint3D x:k.getPoints()){
+//                System.out.print(x.toString()+" ");
+//                temp.add(new LatLng(x.toGeoJson()[1],x.toGeoJson()[0]));
+//            }
+//            out[count++] = temp;
         }
 // iterate over every turn instruction
         for (Instruction instruction : il) {
