@@ -16,6 +16,9 @@ import com.graphhopper.util.PointList;
 import com.graphhopper.util.shapes.GHPoint3D;
 
 public class EleNaV {
+    private final String mapImage = "graph/map.jpg";
+    private final String elevImage = "graph/elevGraph.jpg";
+
     private JFrame gui = new JFrame("EleNa Test");
 
     private JPanel wrapper = new JPanel(new BorderLayout());
@@ -223,6 +226,7 @@ public class EleNaV {
         String[] temp = {"Shortest Path", "Most Elevation Gain", "Least Elevation Gain"};
         for(int i=0;i<3;i++){
             pathB[i] = new JButton(temp[i]);
+            pathB[i].setPreferredSize(new Dimension(180,20));
             pathB[i].addActionListener(pathMode_AL);
             pathB[i].setName(Integer.toString(i));
             modePanel.add(pathB[i]);
@@ -286,10 +290,9 @@ public class EleNaV {
                     + "&chxt=x,y"
                     + "&chxr=1,"
                     + minElev + "," + maxElev;
-            String destFile = "elev.jpg";
             URL url = new URL(chartURL);
             InputStream is = url.openStream();
-            OutputStream os = new FileOutputStream(destFile);
+            OutputStream os = new FileOutputStream(elevImage);
             byte[] b = new byte[2048];
             int length;
             while ((length = is.read(b)) != -1) {
@@ -301,7 +304,7 @@ public class EleNaV {
             e.printStackTrace();
             System.exit(1);
         }
-        ImageIcon elevIcon = new ImageIcon((new ImageIcon("elev.jpg"))
+        ImageIcon elevIcon = new ImageIcon((new ImageIcon(elevImage))
                 .getImage().getScaledInstance(640, 160,
                         java.awt.Image.SCALE_SMOOTH));
         elevGraph.setIcon(elevIcon);
@@ -350,10 +353,9 @@ public class EleNaV {
             for (int i = 1; i < samples; i++) {
                 chartURL += "," + elevArray[i];
             }
-            String destFile = "elev.jpg";
             URL url = new URL(chartURL);
             InputStream is = url.openStream();
-            OutputStream os = new FileOutputStream(destFile);
+            OutputStream os = new FileOutputStream(elevImage);
             byte[] b = new byte[2048];
             int length;
             while ((length = is.read(b)) != -1) {
@@ -365,7 +367,7 @@ public class EleNaV {
             e.printStackTrace();
             System.exit(1);
         }
-        ImageIcon elevIcon = new ImageIcon((new ImageIcon("elev.jpg"))
+        ImageIcon elevIcon = new ImageIcon((new ImageIcon(elevImage))
                 .getImage().getScaledInstance(640, 160,
                         java.awt.Image.SCALE_SMOOTH));
         elevGraph.setIcon(elevIcon);
@@ -382,10 +384,9 @@ public class EleNaV {
                     + "&markers=size:mid|color:red|" + input[1].getText()
                     + "&markers=size:small|color:green|" + markers
                     + "&key=AIzaSyAO1sUMxigsq0jqP_p9t5PVDtb25Jfu5Zc";
-            String destFile = "image.jpg";
             URL url = new URL(imageUrl);
             InputStream is = url.openStream();
-            OutputStream os = new FileOutputStream(destFile);
+            OutputStream os = new FileOutputStream(mapImage);
             byte[] b = new byte[2048];
             int length;
             while ((length = is.read(b)) != -1) {
@@ -397,7 +398,7 @@ public class EleNaV {
             e.printStackTrace();
             System.exit(1);
         }
-        ImageIcon mapIcon = new ImageIcon((new ImageIcon("image.jpg"))
+        ImageIcon mapIcon = new ImageIcon((new ImageIcon(mapImage))
                 .getImage().getScaledInstance(640, 640,
                         java.awt.Image.SCALE_SMOOTH));
         map.setIcon(mapIcon);
