@@ -200,7 +200,7 @@ public class EleNaV {
             }
             path[i] = PolylineEncoding.encode(temp);
             dist[i] = Math.round(in[i].getDistance()*Math.pow(10,3))/Math.pow(10,3);
-            time[i] = (int)in[i].getTime();
+            time[i] = (int)(in[i].getTime()/1000);
             eGain[i] = in[i].getAscend();
             eLoss[i] = in[i].getDescend();
         }
@@ -289,7 +289,8 @@ public class EleNaV {
                     + minElev + "," + maxElev
                     + "&chxt=x,y"
                     + "&chxr=1,"
-                    + minElev + "," + maxElev;
+                    + minElev + "," + maxElev
+                    + "&key=AIzaSyASi8i_P2xPy-mlxEMurV_kWXBgQvVFyF4";
             URL url = new URL(chartURL);
             InputStream is = url.openStream();
             OutputStream os = new FileOutputStream(elevImage);

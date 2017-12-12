@@ -48,11 +48,13 @@ public class graphHopperTest {
 
 // simple configuration of the request object, see the GraphHopperServlet classs for more possibilities.
         GHRequest req = new GHRequest(start.lat, start.lng, end.lat, end.lng).
-                setWeighting("fastest").
+                setWeighting("shortest").
                 setVehicle("foot").
                 setLocale(Locale.US);
         req.setAlgorithm(Parameters.Algorithms.ALT_ROUTE);
-        req.getHints().put(Parameters.Algorithms.AltRoute.MAX_PATHS, "3");
+        req.getHints().put(Parameters.Algorithms.AltRoute.MAX_PATHS, "100");
+        req.getHints().put(Parameters.Algorithms.AltRoute.MAX_WEIGHT, "1.4");
+        req.getHints().put(Parameters.Algorithms.AltRoute.MAX_SHARE, "0.9");
         GHResponse rsp = hopper.route(req);
 
 // first check for errors
@@ -70,19 +72,19 @@ public class graphHopperTest {
         double distance = path.getDistance();
         long timeInMs = path.getTime();
 
-        PathWrapper[] out = new PathWrapper[3];
+        PathWrapper[] out = {path, path, path};
 
         InstructionList il = path.getInstructions();
-        int count = 0;
-        for(PathWrapper k:rsp.getAll()){
-            out[count++] = k;
-//            LinkedList<LatLng> temp = new LinkedList<LatLng>();
-//            System.out.println("\nPath:");
-//            for(GHPoint3D x:k.getPoints()){
-//                System.out.print(x.toString()+" ");
-//                temp.add(new LatLng(x.toGeoJson()[1],x.toGeoJson()[0]));
-//            }
-//            out[count++] = temp;
+        double[] info = {path.getTime(), path.getAscend(), path.getAscend()};
+        for (PathWrapper k : rsp.getAll()) {
+            if (k.getAscend() >= info[1]) {
+                out[1] = k;
+                info[1] = k.getAscend();
+            }
+            if (k.getAscend() <= info[2]) {
+                out[2] = k;
+                info[2] = k.getAscend();
+            }
         }
 // iterate over every turn instruction
         for (Instruction instruction : il) {
