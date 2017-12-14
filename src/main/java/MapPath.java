@@ -31,15 +31,25 @@ public class MapPath {
 		temp[nodelist.length] = node;
 		nodelist = temp;
 	}
-	public MapNode[] getSubPath(int x, int y) {
-		MapNode[] sublist = new MapNode[y-x+1];
+	public MapPath getSubPath(int x, int y) {
+		//MapNode[] sublist = new MapNode[y-x+1];
+		MapPath sublist = new MapPath(this.startNode);
 		for(int i = 0; i <= y-x; i++) {
-			sublist[i] = nodelist[i+x-1];
+			try{
+				sublist.addNodeToPath(this.getNode(y-x+i));
+			}
+			catch(NodeNotFoundException e){
+				e.printStackTrace();
+			}
+			
+			//sublist[i] = nodelist[i+x-1];
 		}
 		return sublist;
 	}
 	public MapNode[] getNodeList() {
 		return nodelist;
 	}
-	
+	public MapNode getNode(int i){
+		return nodelist[i];
+	}
 }
