@@ -4,12 +4,14 @@ public class MapNode {
 	private double elevation;
 	private double x;
 	private double y;
+	private boolean ignore;
 	//implements a new node with an empty node array
 	public MapNode(double x, double y, double elevation) {
 		this.x = x;
 		this.y = y;
 		this.elevation = elevation;
 		nodes = new DistPair[0];
+		ignore = false;
 	}
 	//if you already have a node array for this particular node, you can use this constructor.
 	public MapNode(double x, double y, double elevation, DistPair[] nodes) {
@@ -17,6 +19,7 @@ public class MapNode {
 		this.y = y;
 		this.elevation = elevation;
 		this.nodes = nodes;
+		ignore = false;
 	}
 	//Check to see if this node contains any nodes.
 	public boolean hasNodes() {
@@ -25,7 +28,7 @@ public class MapNode {
 		}
 		return false;
 	}
-	//getters for x, y, size, nodes, and the elevation. Do we need setters?
+	//getters for x, y, size, nodes, and the elevation.
 	public double getX() {
 		return x;
 	}
@@ -34,6 +37,13 @@ public class MapNode {
 	}
 	public int getSize() {
 		return nodes.length;
+	}
+	public boolean getIgnore() {
+		return ignore;
+	}
+	//get and set the ignore boolean
+	public void setIgnore(boolean ignore) {
+		this.ignore = ignore;
 	}
 	public DistPair[] getPairs() {
 		return nodes;

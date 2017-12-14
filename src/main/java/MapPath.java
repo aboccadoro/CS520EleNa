@@ -9,7 +9,7 @@ public class MapPath {
 		this.startNode = startNode;
 		currentNode = startNode;
 		totalDistance = 0;
-		nodesInPath = 0;
+		nodesInPath = 1;
 		nodelist = new MapNode[1];
 		nodelist[0] = startNode;
 	}
@@ -37,6 +37,9 @@ public class MapPath {
 			sublist[i] = nodelist[i+x-1];
 		}
 		return sublist;
+	}
+	public MapNode[] getNodeList() {
+		return nodelist;
 	}
 	
 }
