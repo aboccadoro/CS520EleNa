@@ -7,6 +7,9 @@ import com.graphhopper.util.Parameters.Algorithms;
 public class MapGraph{
 
 
+    //returns three MapPaths in an array; path 0 is the shortest path ignoring elevation,
+    // 1 is the shortest path with minimal elevation, 
+    //and 2 is the shortest path with maximal elevation.
    public static MapPath[] modifiedYens(MapNode start, MapNode end, float xpercent){
        int K = 1;
        ArrayList<MapPath> shortestList = new ArrayList<MapPath>();
@@ -54,6 +57,20 @@ public class MapGraph{
            shortestList.add(potentialPaths.poll());
            potentialPaths.clear();
        }
+
+       MapPath result[] = new MapPath[3];
+       result[0] = shortestList.get(0);
+       result[1] = shortestList.get(0);
+       result[2] = shortestList.get(0);
+       for(int i = 0; i < shortestList.size(); i++){
+           if(result[1].getElevationGain() > shortestList.get(i).getElevationGain()){
+            result[1] = shortestList.get(i);
+           }
+           if(result[2].getElevationGain() < shortestList.get(i).getElevationGain()){
+            result[2] = shortestList.get(i);
+           }
+        }
+    return result; 
    }
 
 }

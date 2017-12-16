@@ -5,6 +5,8 @@ public class MapPath {
 	private MapNode currentNode;
 	private MapNode[] nodelist;
 	private int nodesInPath;
+	private int totalElevationGain;
+
 	public MapPath(MapNode startNode) {
 		this.startNode = startNode;
 		currentNode = startNode;
@@ -13,6 +15,7 @@ public class MapPath {
 		nodelist = new MapNode[1];
 		nodelist[0] = startNode;
 		nodesInPath = 1;
+		totalElevationGain = 0;
 	}
 	public double getTotalDistance() {
 		return totalDistance;
@@ -32,6 +35,10 @@ public class MapPath {
 		temp[nodelist.length] = node;
 		nodelist = temp;
 		nodesInPath++;
+		if(nodelist.length > 1 && node.getElevation() > temp[nodelist.length - 1].getElevation()){
+			totalElevationGain += node.getElevation();
+		}
+		
 	}
 	public MapPath getSubPath(int x, int y) {
 		//MapNode[] sublist = new MapNode[y-x+1];
@@ -75,6 +82,10 @@ public class MapPath {
 
 	public int getNumberNodes(){
 		return nodesInPath;
+	}
+
+	public int getElevationGain(){
+		return totalElevationGain;
 	}
 
 	public MapNode getStartNode(){
