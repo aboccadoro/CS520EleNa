@@ -16,7 +16,7 @@ public class Model {
 		head.addNode(branchNode);
 		branchNode.getNode().addNode(head, distance);	
 	}
-	public boolean comparePaths(MapPath a, MapPath b) {
+	public static boolean comparePaths(MapPath a, MapPath b) {
 		MapNode[] alist = a.getNodeList();
 		MapNode[] blist = b.getNodeList();
 		if(alist.length != blist.length) {
