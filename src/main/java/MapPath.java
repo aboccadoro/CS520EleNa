@@ -102,5 +102,6 @@ public class MapPath {
 		result.totalDistance = a.getTotalDistance() + b.getTotalDistance();
 		result.startNode = list[0];
 		result.currentNode = list[list.length - 1];
+		return result;
 	}
 }

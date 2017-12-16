@@ -14,7 +14,7 @@ public class MapGraph{
        int K = 1;
        ArrayList<MapPath> shortestList = new ArrayList<MapPath>();
        PriorityQueue<MapPath> potentialPaths = new PriorityQueue<MapPath>(40, new MapLengthComparator());
-       shortestList.set(0, Algorithms.dijkstra(start, end));
+       shortestList.set(0, dijkstra(start, end));
        //replace with while loop with comparison statement with xpercent
        for(int k = 1; k < K; k++){
 
@@ -37,7 +37,7 @@ public class MapGraph{
                    }
                }
                MapPath spurPath = dijkstra(spurNode, end);
-               MapPath totalPath = MapPath.mergePaths(totalPath, spurPath);
+               MapPath totalPath = MapPath.mergePaths(rootPath, spurPath);
 
                potentialPaths.add(totalPath);
 
@@ -73,4 +73,9 @@ public class MapGraph{
     return result; 
    }
 
+
+   //placeholder dikjstra algorithm function
+   public static MapPath dijkstra(MapNode start, MapNode end){
+       return new MapPath(start);
+   }
 }
