@@ -12,6 +12,7 @@ public class MapPath {
 		nodesInPath = 1;
 		nodelist = new MapNode[1];
 		nodelist[0] = startNode;
+		nodesInPath = 1;
 	}
 	public double getTotalDistance() {
 		return totalDistance;
@@ -30,6 +31,7 @@ public class MapPath {
 		}
 		temp[nodelist.length] = node;
 		nodelist = temp;
+		nodesInPath++;
 	}
 	public MapPath getSubPath(int x, int y) {
 		//MapNode[] sublist = new MapNode[y-x+1];
@@ -51,5 +53,43 @@ public class MapPath {
 	}
 	public MapNode getNode(int i){
 		return nodelist[i];
+	}
+
+	//takes two indecies of nodes and sets the edge between them to be Active
+	public void setEdgeActive(int n1, int n2, boolean set){
+		MapNode a = nodelist[n1];
+		MapNode b = nodelist[n2];
+		for(int c = 0; c < a.getPairs().length; c++){
+			DistPair[] pairs = a.getPairs();
+			if(pairs[c].getNode().equals(b)){
+				pairs[c].setActive(set);
+			}
+		}
+		for(int c = 0; c < b.getPairs().length; c++){
+			DistPair[] pairs = b.getPairs();
+			if(pairs[c].getNode().equals(a)){
+				pairs[c].setActive(set);
+			}
+		}
+	}
+
+	public int getNumberNodes(){
+		return nodesInPath;
+	}
+
+	public MapNode getStartNode(){
+		return startNode;
+	}
+
+	public static MapPath mergePaths(MapPath a, MapPath b){
+		MapPath result = new MapPath(a.getStartNode());
+		MapNode[] list = new MapNode[a.getNumberNodes() + b.getNumberNodes()];
+		System.arraycopy(a.getNodeList(), 0, list, 0, a.getNumberNodes());
+		System.arraycopy(b.getNodeList(), a.getNumberNodes(), list, 0, b.getNumberNodes());
+		result.nodelist = list;
+		result.nodesInPath = list.length;
+		result.totalDistance = a.getTotalDistance() + b.getTotalDistance();
+		result.startNode = list[0];
+		result.currentNode = list[list.length - 1];
 	}
 }
