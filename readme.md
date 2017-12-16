@@ -9,7 +9,7 @@ You will be brought to the UI.
 
 Users Guide
 
-Double click anywhere on the map to zoom in; double right click to zoon out.
+Double click anywhere on the map to zoom in; double right click to zoom out.
 
 At the top of the window will be two coordinates: an origin, and a destination, and each coordinate has a 'select' button. Click on either of these buttons, then click anywhere on the map. The location will snap automatically to a road.
 Once each point is selected, click the 'search' button, and three paths will be available for viewing: the shortest path (without taking elevation into account), the shortest path with maximal elevation gain, and the shortest path with minimal elevation gain.
